@@ -1,0 +1,13 @@
+.reg{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	flex-direction:column;
+}
+
+.inpx{
+	padding:5px 10px;
+	border:none;
+	border-radius:4px;
+	
+}

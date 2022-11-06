@@ -1,0 +1,40 @@
+body{
+
+}
+
+.reg{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	flex-direction:column;
+}
+
+
+.regadmin{
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	flex-direction:column;
+	height:100vh;
+	background:grey;
+}
+
+.inpx{
+	padding:8px 14px;
+	
+	border-radius:4px;
+	border:1px solid black;
+	margin:5px;
+	
+}
+
+#sub{
+	background:blue;
+	color:white;
+	border:none;
+	cursor:pointer;
+}
+
+.wrongdata{
+	color:red;
+}

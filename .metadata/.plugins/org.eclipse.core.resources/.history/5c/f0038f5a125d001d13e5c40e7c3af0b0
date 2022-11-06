@@ -1,0 +1,87 @@
+package dao;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import model.*;
+
+public class UserDao {
+
+	private String dburl = "jdbc:mysql://localhost:3306/java_sample";
+	private String dbuname = "root";
+	private String dbpassword = "";
+	private String dbdriver = "com.mysql.jdbc.Driver";
+	
+	public void loadDriver( String dbDriver){
+		try{
+			Class.forName(dbDriver);
+		}catch(ClassNotFoundException e){
+			e.printStackTrace();
+		}
+	}
+	
+	public Connection getConnection(){
+		Connection con = null;
+		
+		try{
+			con = DriverManager.getConnection(dburl,dbuname,dbpassword);
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+			
+		}
+		
+		return con;
+	}
+	
+	public String register(User user){
+		loadDriver(dbdriver);
+		Connection con = getConnection();
+		String query = "insert into userdata values (?,?,?,?)";
+		String result = "registered successfully!!";
+		
+		
+		try{
+			PreparedStatement ps = con.prepareStatement(query);
+			ps.setString(1, user.getUsername());
+			ps.setString(2, user.getEmail());
+			ps.setString(3, user.getPassword());
+			ps.setString(4, user.getConfirmpass());
+			ps.executeUpdate();
+			
+		}catch(SQLException e){
+			result = "registration unsuccessful!!";
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		return result;
+	}
+	
+	public String login(String uname,String pass){
+		String res="";
+		loadDriver(dbdriver);
+		Connection con = getConnection();
+		String sql ="select username,password from userdata where username=uname && password=pass";
+		
+		try{
+		PreparedStatement ps = con.prepareStatement(sql);
+		boolean fl=	ps.execute();
+		if(fl){
+			res = "Login Successfull!!";
+		}else{
+			res = "no user found!!";
+		}
+		}catch(SQLException e){
+			res="something went wrong!!";
+			e.printStackTrace();
+		}
+		
+		
+		return res;
+	}
+
+}

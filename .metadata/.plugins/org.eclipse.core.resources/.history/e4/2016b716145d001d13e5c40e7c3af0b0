@@ -1,0 +1,69 @@
+package reg;
+
+import model.*;
+import dao.*;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class ControllRequest
+ */
+@WebServlet("/ControllRequest")
+public class ControllRequest extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+ 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+		String submit = request.getParameter("submit");
+		
+		if(submit.equals("register")){
+		System.out.println("entered!!");
+		PrintWriter out = response.getWriter();
+		String username = request.getParameter("username");
+		String email =  request.getParameter("email");
+		String password = request.getParameter("password");
+		String confirmpass = request.getParameter("confirmpass");
+		User user = new User(username,email,password,confirmpass);
+//		out.print(user.toString());
+		
+		if(!password.equals(confirmpass)){
+		
+		request.setAttribute("data", "password is not matching!!!");
+		RequestDispatcher rd = request.getRequestDispatcher("Register.jsp");
+		rd.include(request,response);
+		}else{
+			
+			
+			UserDao ud = new UserDao();
+			String res = ud.register(user);
+			request.setAttribute("data",res);
+			RequestDispatcher rd = request.getRequestDispatcher("Register.jsp");
+			rd.include(request, response);
+			
+			
+		}
+		}else{
+			String uname = request.getParameter("username");
+			String pass = request.getParameter("password");
+			UserDao ud = new UserDao();
+			String res = ud.login(uname, pass);
+			System.out.print(res);
+			request.setAttribute("data", res);
+			RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+			rd.include(request, response);
+			
+			
+		}
+		
+	}
+
+}

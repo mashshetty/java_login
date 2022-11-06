@@ -1,0 +1,27 @@
+package model;
+
+public class User {
+	
+	String username;
+	String email;
+	String password;
+	String confirmpass;
+	
+	User(String uname,String email, String password, String cpass){
+		this.username = uname;
+		this.email= email;
+		this.password = password;
+		this.confirmpass = cpass;
+	}
+	
+	
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+	
+		
+		
+
+	}
+
+}
